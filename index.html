@@ -23,7 +23,29 @@
         p.subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 18px;
+            font-size: 1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         .filter-container {
@@ -118,12 +140,18 @@
     <h1>Imperialism, Colonialism and Empire</h1>
     <p class="subtitle">Klicke auf eine Karte, um Definition & Übersetzung anzuzeigen (und erneut zum Verdecken).</p>
 
+    <!-- Suchleiste -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Nach Wort, Definition oder Übersetzung suchen..." oninput="applyFilters()">
+    </div>
+
+    <!-- Filter Buttons für Seiten -->
     <div class="filter-container">
-        <button class="filter-btn active" onclick="filterPage('all', this)">Alle Vokabeln</button>
-        <button class="filter-btn" onclick="filterPage('p1', this)">Seite 1</button>
-        <button class="filter-btn" onclick="filterPage('p2', this)">Seite 2</button>
-        <button class="filter-btn" onclick="filterPage('p3', this)">Seite 3</button>
-        <button class="filter-btn" onclick="filterPage('p4', this)">Seite 4</button>
+        <button class="filter-btn active" onclick="setPageFilter('all', this)">Alle Vokabeln</button>
+        <button class="filter-btn" onclick="setPageFilter('p1', this)">Seite 1</button>
+        <button class="filter-btn" onclick="setPageFilter('p2', this)">Seite 2</button>
+        <button class="filter-btn" onclick="setPageFilter('p3', this)">Seite 3</button>
+        <button class="filter-btn" onclick="setPageFilter('p4', this)">Seite 4</button>
     </div>
 
     <div class="grid">
@@ -1056,27 +1084,34 @@
     </div>
 
     <script>
+        let selectedPage = 'all';
+
         function toggleCard(cardElement) {
             cardElement.classList.toggle('open');
         }
 
-        function filterPage(pageClass, btnElement) {
-            // Button Styling anpassen
+        function setPageFilter(pageClass, btnElement) {
             let buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
 
-            // Karten filtern
+            selectedPage = pageClass;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let query = document.getElementById('searchInput').value.toLowerCase().trim();
             let cards = document.querySelectorAll('.card');
+
             cards.forEach(card => {
-                if (pageClass === 'all') {
+                let matchesPage = (selectedPage === 'all') || card.classList.contains(selectedPage);
+                let textContent = card.innerText.toLowerCase();
+                let matchesSearch = query === '' || textContent.includes(query);
+
+                if (matchesPage && matchesSearch) {
                     card.style.display = 'block';
                 } else {
-                    if (card.classList.contains(pageClass)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                    card.style.display = 'none';
                 }
             });
         }
