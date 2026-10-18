@@ -48,6 +48,29 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
+        .controls-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            background-color: #1e293b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #334155;
+        }
+
         .filter-container {
             display: flex;
             justify-content: center;
@@ -133,16 +156,39 @@
         .card.open .hint {
             display: none;
         }
+
+        /* Modus Deutsch auf der Vorderseite */
+        body.de-front .front-en {
+            display: none;
+        }
+
+        body.de-front .front-de {
+            display: block;
+        }
+
+        body:not(.de-front) .front-en {
+            display: block;
+        }
+
+        body:not(.de-front) .front-de {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <h1>Imperialism, Colonialism and Empire</h1>
-    <p class="subtitle">Klicke auf eine Karte, um Definition & Übersetzung anzuzeigen (und erneut zum Verdecken).</p>
+    <p class="subtitle">Klicke auf eine Karte, um die Antworten aufzudecken oder zu verdecken.</p>
 
     <!-- Suchleiste -->
     <div class="search-container">
         <input type="text" id="searchInput" class="search-input" placeholder="🔍 Nach Wort, Definition oder Übersetzung suchen..." oninput="applyFilters()">
+    </div>
+
+    <!-- Mischen & Modus-Umschalter -->
+    <div class="controls-container">
+        <button class="action-btn" onclick="shuffleCards()">🔀 Karten mischen</button>
+        <button class="action-btn" id="modeBtn" onclick="toggleMode()">🔄 Vorderseite: Englisch</button>
     </div>
 
     <!-- Filter Buttons für Seiten -->
@@ -154,930 +200,1950 @@
         <button class="filter-btn" onclick="setPageFilter('p4', this)">Seite 4</button>
     </div>
 
-    <div class="grid">
+    <div class="grid" id="cardGrid">
 
         <!-- ================= SEITE 1 ================= -->
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">imperialism</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a policy or practice of extending a country's power and influence over other countries</div>
-                <div class="translation"><strong>DE:</strong> Imperialismus</div>
+            <div class="front-en">
+                <div class="word">imperialism</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a policy or practice of extending a country's power and influence over other countries</div>
+                    <div class="translation"><strong>DE:</strong> Imperialismus</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Imperialismus</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> imperialism</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a policy or practice of extending a country's power and influence over other countries</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">colonialism</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the practice of establishing direct control over a foreign territory and its people</div>
-                <div class="translation"><strong>DE:</strong> Kolonialismus</div>
+            <div class="front-en">
+                <div class="word">colonialism</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the practice of establishing direct control over a foreign territory and its people</div>
+                    <div class="translation"><strong>DE:</strong> Kolonialismus</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Kolonialismus</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> colonialism</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the practice of establishing direct control over a foreign territory and its people</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">economic / cultural influence</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the ability to affect another country economically or culturally</div>
-                <div class="translation"><strong>DE:</strong> wirtschaftlicher / kultureller Einfluss</div>
+            <div class="front-en">
+                <div class="word">economic / cultural influence</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the ability to affect another country economically or culturally</div>
+                    <div class="translation"><strong>DE:</strong> wirtschaftlicher / kultureller Einfluss</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">wirtschaftlicher / kultureller Einfluss</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> economic / cultural influence</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the ability to affect another country economically or culturally</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to acquire overseas territories</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to gain possession or control of territories abroad</div>
-                <div class="translation"><strong>DE:</strong> überseeische Gebiete erwerben</div>
+            <div class="front-en">
+                <div class="word">to acquire overseas territories</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to gain possession or control of territories abroad</div>
+                    <div class="translation"><strong>DE:</strong> überseeische Gebiete erwerben</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">überseeische Gebiete erwerben</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to acquire overseas territories</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to gain possession or control of territories abroad</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to interfere in the affairs of a country</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to become involved in another country's internal matters</div>
-                <div class="translation"><strong>DE:</strong> sich in die Angelegenheiten eines Landes einmischen</div>
+            <div class="front-en">
+                <div class="word">to interfere in the affairs of a country</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to become involved in another country's internal matters</div>
+                    <div class="translation"><strong>DE:</strong> sich in die Angelegenheiten eines Landes einmischen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">sich in die Angelegenheiten eines Landes einmischen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to interfere in the affairs of a country</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to become involved in another country's internal matters</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to annex territories</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to take control of territory and formally add it to a country</div>
-                <div class="translation"><strong>DE:</strong> Gebiete annektieren</div>
+            <div class="front-en">
+                <div class="word">to annex territories</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to take control of territory and formally add it to a country</div>
+                    <div class="translation"><strong>DE:</strong> Gebiete annektieren</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Gebiete annektieren</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to annex territories</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to take control of territory and formally add it to a country</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to assume control of a region</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to take power or authority over an area</div>
-                <div class="translation"><strong>DE:</strong> die Kontrolle über eine Region übernehmen</div>
+            <div class="front-en">
+                <div class="word">to assume control of a region</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to take power or authority over an area</div>
+                    <div class="translation"><strong>DE:</strong> die Kontrolle über eine Region übernehmen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">die Kontrolle über eine Region übernehmen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to assume control of a region</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to take power or authority over an area</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">oppressive</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> using authority in a cruel or unjust way</div>
-                <div class="translation"><strong>DE:</strong> unterdrückerisch</div>
+            <div class="front-en">
+                <div class="word">oppressive</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> using authority in a cruel or unjust way</div>
+                    <div class="translation"><strong>DE:</strong> unterdrückerisch</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">unterdrückerisch</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> oppressive</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> using authority in a cruel or unjust way</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to exploit sb. / sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to use people or resources unfairly for one's own advantage</div>
-                <div class="translation"><strong>DE:</strong> jdn. / etw. ausbeuten</div>
+            <div class="front-en">
+                <div class="word">to exploit sb. / sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to use people or resources unfairly for one's own advantage</div>
+                    <div class="translation"><strong>DE:</strong> jdn. / etw. ausbeuten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">jdn. / etw. ausbeuten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to exploit sb. / sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to use people or resources unfairly for one's own advantage</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to establish control over sb. / sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to gain and maintain power over people or territory</div>
-                <div class="translation"><strong>DE:</strong> Kontrolle über jdn. / etw. erlangen</div>
+            <div class="front-en">
+                <div class="word">to establish control over sb. / sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to gain and maintain power over people or territory</div>
+                    <div class="translation"><strong>DE:</strong> Kontrolle über jdn. / etw. erlangen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Kontrolle über jdn. / etw. erlangen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to establish control over sb. / sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to gain and maintain power over people or territory</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to establish a foothold in a region</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to gain a secure position from which influence can be expanded</div>
-                <div class="translation"><strong>DE:</strong> in einer Region Fuß fassen</div>
+            <div class="front-en">
+                <div class="word">to establish a foothold in a region</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to gain a secure position from which influence can be expanded</div>
+                    <div class="translation"><strong>DE:</strong> in einer Region Fuß fassen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">in einer Region Fuß fassen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to establish a foothold in a region</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to gain a secure position from which influence can be expanded</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to exercise power / influence / control</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to use one's authority or ability to influence others</div>
-                <div class="translation"><strong>DE:</strong> Macht / Einfluss / Kontrolle ausüben</div>
+            <div class="front-en">
+                <div class="word">to exercise power / influence / control</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to use one's authority or ability to influence others</div>
+                    <div class="translation"><strong>DE:</strong> Macht / Einfluss / Kontrolle ausüben</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Macht / Einfluss / Kontrolle ausüben</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to exercise power / influence / control</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to use one's authority or ability to influence others</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to expand one's borders</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to increase the territory controlled by a country</div>
-                <div class="translation"><strong>DE:</strong> seine Grenzen erweitern</div>
+            <div class="front-en">
+                <div class="word">to expand one's borders</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to increase the territory controlled by a country</div>
+                    <div class="translation"><strong>DE:</strong> seine Grenzen erweitern</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">seine Grenzen erweitern</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to expand one's borders</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to increase the territory controlled by a country</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">conquest</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the act of taking control of territory by military force</div>
-                <div class="translation"><strong>DE:</strong> Eroberung</div>
+            <div class="front-en">
+                <div class="word">conquest</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the act of taking control of territory by military force</div>
+                    <div class="translation"><strong>DE:</strong> Eroberung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Eroberung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> conquest</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the act of taking control of territory by military force</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to extend power over foreign nations</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to increase control or influence over other countries</div>
-                <div class="translation"><strong>DE:</strong> Macht über fremde Staaten ausdehnen</div>
+            <div class="front-en">
+                <div class="word">to extend power over foreign nations</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to increase control or influence over other countries</div>
+                    <div class="translation"><strong>DE:</strong> Macht über fremde Staaten ausdehnen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Macht über fremde Staaten ausdehnen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to extend power over foreign nations</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to increase control or influence over other countries</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to extract resources / labour / wealth</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to take resources, work or wealth for the benefit of another power</div>
-                <div class="translation"><strong>DE:</strong> Ressourcen / Arbeitskraft / Reichtum entziehen bzw. ausbeuten</div>
+            <div class="front-en">
+                <div class="word">to extract resources / labour / wealth</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to take resources, work or wealth for the benefit of another power</div>
+                    <div class="translation"><strong>DE:</strong> Ressourcen / Arbeitskraft / Reichtum entziehen bzw. ausbeuten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Ressourcen / Arbeitskraft / Reichtum entziehen bzw. ausbeuten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to extract resources / labour / wealth</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to take resources, work or wealth for the benefit of another power</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to impose a political / social system</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to force a particular system on another society</div>
-                <div class="translation"><strong>DE:</strong> ein politisches / soziales System aufzwingen</div>
+            <div class="front-en">
+                <div class="word">to impose a political / social system</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to force a particular system on another society</div>
+                    <div class="translation"><strong>DE:</strong> ein politisches / soziales System aufzwingen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">ein politisches / soziales System aufzwingen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to impose a political / social system</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to force a particular system on another society</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to impose cultural values</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to force another society to adopt particular beliefs or customs</div>
-                <div class="translation"><strong>DE:</strong> kulturelle Werte aufzwingen</div>
+            <div class="front-en">
+                <div class="word">to impose cultural values</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to force another society to adopt particular beliefs or customs</div>
+                    <div class="translation"><strong>DE:</strong> kulturelle Werte aufzwingen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">kulturelle Werte aufzwingen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to impose cultural values</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to force another society to adopt particular beliefs or customs</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to justify conquests</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to give reasons intended to make territorial expansion seem acceptable</div>
-                <div class="translation"><strong>DE:</strong> Eroberungen rechtfertigen</div>
+            <div class="front-en">
+                <div class="word">to justify conquests</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to give reasons intended to make territorial expansion seem acceptable</div>
+                    <div class="translation"><strong>DE:</strong> Eroberungen rechtfertigen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Eroberungen rechtfertigen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to justify conquests</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to give reasons intended to make territorial expansion seem acceptable</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to launch an invasion</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to begin a military attack on another country</div>
-                <div class="translation"><strong>DE:</strong> eine Invasion beginnen</div>
+            <div class="front-en">
+                <div class="word">to launch an invasion</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to begin a military attack on another country</div>
+                    <div class="translation"><strong>DE:</strong> eine Invasion beginnen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">eine Invasion beginnen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to launch an invasion</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to begin a military attack on another country</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to militarise a region</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to increase the military presence or importance in an area</div>
-                <div class="translation"><strong>DE:</strong> eine Region militarisieren</div>
+            <div class="front-en">
+                <div class="word">to militarise a region</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to increase the military presence or importance in an area</div>
+                    <div class="translation"><strong>DE:</strong> eine Region militarisieren</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">eine Region militarisieren</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to militarise a region</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to increase the military presence or importance in an area</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">fierce nationalist rhetoric</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> strongly nationalistic language used to promote political aims</div>
-                <div class="translation"><strong>DE:</strong> aggressive nationalistische Rhetorik</div>
+            <div class="front-en">
+                <div class="word">fierce nationalist rhetoric</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> strongly nationalistic language used to promote political aims</div>
+                    <div class="translation"><strong>DE:</strong> aggressive nationalistische Rhetorik</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">aggressive nationalistische Rhetorik</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> fierce nationalist rhetoric</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> strongly nationalistic language used to promote political aims</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">imperialist designs</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> plans or ambitions to extend power over other territories</div>
-                <div class="translation"><strong>DE:</strong> imperialistische Absichten</div>
+            <div class="front-en">
+                <div class="word">imperialist designs</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> plans or ambitions to extend power over other territories</div>
+                    <div class="translation"><strong>DE:</strong> imperialistische Absichten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">imperialistische Absichten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> imperialist designs</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> plans or ambitions to extend power over other territories</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to have a significant impact on sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to affect something strongly</div>
-                <div class="translation"><strong>DE:</strong> erhebliche Auswirkungen haben</div>
+            <div class="front-en">
+                <div class="word">to have a significant impact on sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to affect something strongly</div>
+                    <div class="translation"><strong>DE:</strong> erhebliche Auswirkungen haben</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">erhebliche Auswirkungen haben</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to have a significant impact on sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to affect something strongly</div>
+                </div>
             </div>
         </div>
 
         <div class="card p1" onclick="toggleCard(this)">
-            <div class="word">to result in / lead to sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to cause a particular consequence</div>
-                <div class="translation"><strong>DE:</strong> zu etw. führen</div>
+            <div class="front-en">
+                <div class="word">to result in / lead to sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to cause a particular consequence</div>
+                    <div class="translation"><strong>DE:</strong> zu etw. führen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">zu etw. führen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to result in / lead to sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to cause a particular consequence</div>
+                </div>
             </div>
         </div>
 
 
         <!-- ================= SEITE 2 ================= -->
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">unequal distribution of resources</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an unfair allocation of resources among groups or countries</div>
-                <div class="translation"><strong>DE:</strong> ungleiche Verteilung von Ressourcen</div>
+            <div class="front-en">
+                <div class="word">unequal distribution of resources</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an unfair allocation of resources among groups or countries</div>
+                    <div class="translation"><strong>DE:</strong> ungleiche Verteilung von Ressourcen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">ungleiche Verteilung von Ressourcen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> unequal distribution of resources</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an unfair allocation of resources among groups or countries</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">political instability</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a situation in which political structures are insecure or frequently changing</div>
-                <div class="translation"><strong>DE:</strong> politische Instabilität</div>
+            <div class="front-en">
+                <div class="word">political instability</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a situation in which political structures are insecure or frequently changing</div>
+                    <div class="translation"><strong>DE:</strong> politische Instabilität</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">politische Instabilität</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> political instability</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a situation in which political structures are insecure or frequently changing</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">cultural loss</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the disappearance or weakening of traditions, languages or identities</div>
-                <div class="translation"><strong>DE:</strong> kultureller Verlust</div>
+            <div class="front-en">
+                <div class="word">cultural loss</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the disappearance or weakening of traditions, languages or identities</div>
+                    <div class="translation"><strong>DE:</strong> kultureller Verlust</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">kultureller Verlust</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> cultural loss</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the disappearance or weakening of traditions, languages or identities</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">global economic inequality</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> unequal distribution of income and wealth worldwide</div>
-                <div class="translation"><strong>DE:</strong> globale wirtschaftliche Ungleichheit</div>
+            <div class="front-en">
+                <div class="word">global economic inequality</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> unequal distribution of income and wealth worldwide</div>
+                    <div class="translation"><strong>DE:</strong> globale wirtschaftliche Ungleichheit</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">globale wirtschaftliche Ungleichheit</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> global economic inequality</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> unequal distribution of income and wealth worldwide</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">environmental destruction</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> serious damage to the natural environment</div>
-                <div class="translation"><strong>DE:</strong> Umweltzerstörung</div>
+            <div class="front-en">
+                <div class="word">environmental destruction</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> serious damage to the natural environment</div>
+                    <div class="translation"><strong>DE:</strong> Umweltzerstörung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Umweltzerstörung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> environmental destruction</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> serious damage to the natural environment</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">racism and discrimination</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> unequal treatment based on race, ethnicity or other characteristics</div>
-                <div class="translation"><strong>DE:</strong> Rassismus und Diskriminierung</div>
+            <div class="front-en">
+                <div class="word">racism and discrimination</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> unequal treatment based on race, ethnicity or other characteristics</div>
+                    <div class="translation"><strong>DE:</strong> Rassismus und Diskriminierung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Rassismus und Diskriminierung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> racism and discrimination</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> unequal treatment based on race, ethnicity or other characteristics</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">fragmentation of societies</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the division of societies into separate or conflicting groups</div>
-                <div class="translation"><strong>DE:</strong> Zersplitterung von Gesellschaften</div>
+            <div class="front-en">
+                <div class="word">fragmentation of societies</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the division of societies into separate or conflicting groups</div>
+                    <div class="translation"><strong>DE:</strong> Zersplitterung von Gesellschaften</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Zersplitterung von Gesellschaften</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> fragmentation of societies</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the division of societies into separate or conflicting groups</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">loss of political autonomy</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the loss of the ability to govern oneself</div>
-                <div class="translation"><strong>DE:</strong> Verlust politischer Autonomie</div>
+            <div class="front-en">
+                <div class="word">loss of political autonomy</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the loss of the ability to govern oneself</div>
+                    <div class="translation"><strong>DE:</strong> Verlust politischer Autonomie</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Verlust politischer Autonomie</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> loss of political autonomy</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the loss of the ability to govern oneself</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">decolonisation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the process by which colonies become politically independent</div>
-                <div class="translation"><strong>DE:</strong> Entkolonisierung</div>
+            <div class="front-en">
+                <div class="word">decolonisation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the process by which colonies become politically independent</div>
+                    <div class="translation"><strong>DE:</strong> Entkolonisierung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Entkolonisierung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> decolonisation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the process by which colonies become politically independent</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">transition from empire to nation-state</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the transformation of imperial territories into independent states</div>
-                <div class="translation"><strong>DE:</strong> Übergang vom Imperium zum Nationalstaat</div>
+            <div class="front-en">
+                <div class="word">transition from empire to nation-state</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the transformation of imperial territories into independent states</div>
+                    <div class="translation"><strong>DE:</strong> Übergang vom Imperium zum Nationalstaat</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Übergang vom Imperium zum Nationalstaat</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> transition from empire to nation-state</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the transformation of imperial territories into independent states</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">egalitarian</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> based on the principle that people should have equal rights and opportunities</div>
-                <div class="translation"><strong>DE:</strong> egalitär / auf Gleichheit ausgerichtet</div>
+            <div class="front-en">
+                <div class="word">egalitarian</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> based on the principle that people should have equal rights and opportunities</div>
+                    <div class="translation"><strong>DE:</strong> egalitär / auf Gleichheit ausgerichtet</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">egalitär / auf Gleichheit ausgerichtet</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> egalitarian</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> based on the principle that people should have equal rights and opportunities</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">Commonwealth</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an association or union of states linked by shared interests or history</div>
-                <div class="translation"><strong>DE:</strong> Staatenbund / Commonwealth</div>
+            <div class="front-en">
+                <div class="word">Commonwealth</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an association or union of states linked by shared interests or history</div>
+                    <div class="translation"><strong>DE:</strong> Staatenbund / Commonwealth</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Staatenbund / Commonwealth</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> Commonwealth</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an association or union of states linked by shared interests or history</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to usher in sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to cause or mark the beginning of something new</div>
-                <div class="translation"><strong>DE:</strong> etw. einleiten / eine neue Ära einläuten</div>
+            <div class="front-en">
+                <div class="word">to usher in sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to cause or mark the beginning of something new</div>
+                    <div class="translation"><strong>DE:</strong> etw. einleiten / eine neue Ära einläuten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">etw. einleiten / eine neue Ära einläuten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to usher in sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to cause or mark the beginning of something new</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to emulate sb.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to imitate someone, often in order to equal their success or behaviour</div>
-                <div class="translation"><strong>DE:</strong> jdn. nachahmen</div>
+            <div class="front-en">
+                <div class="word">to emulate sb.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to imitate someone, often in order to equal their success or behaviour</div>
+                    <div class="translation"><strong>DE:</strong> jdn. nachahmen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">jdn. nachahmen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to emulate sb.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to imitate someone, often in order to equal their success or behaviour</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">imperial tendencies</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> tendencies towards extending power or control over other territories</div>
-                <div class="translation"><strong>DE:</strong> imperialistische Tendenzen</div>
+            <div class="front-en">
+                <div class="word">imperial tendencies</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> tendencies towards extending power or control over other territories</div>
+                    <div class="translation"><strong>DE:</strong> imperialistische Tendenzen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">imperialistische Tendenzen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> imperial tendencies</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> tendencies towards extending power or control over other territories</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">secessionist region</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a region whose population or leaders seek independence from an existing state</div>
-                <div class="translation"><strong>DE:</strong> separatistische Region</div>
+            <div class="front-en">
+                <div class="word">secessionist region</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a region whose population or leaders seek independence from an existing state</div>
+                    <div class="translation"><strong>DE:</strong> separatistische Region</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">separatistische Region</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> secessionist region</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a region whose population or leaders seek independence from an existing state</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">assorted</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> of various different kinds</div>
-                <div class="translation"><strong>DE:</strong> verschiedenste / verschiedene</div>
+            <div class="front-en">
+                <div class="word">assorted</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> of various different kinds</div>
+                    <div class="translation"><strong>DE:</strong> verschiedenste / verschiedene</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">verschiedenste / verschiedene</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> assorted</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> of various different kinds</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">full-scale invasion</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a major military attack involving extensive forces</div>
-                <div class="translation"><strong>DE:</strong> groß angelegte Invasion</div>
+            <div class="front-en">
+                <div class="word">full-scale invasion</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a major military attack involving extensive forces</div>
+                    <div class="translation"><strong>DE:</strong> groß angelegte Invasion</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">groß angelegte Invasion</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> full-scale invasion</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a major military attack involving extensive forces</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">inseparable</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> impossible to separate</div>
-                <div class="translation"><strong>DE:</strong> untrennbar</div>
+            <div class="front-en">
+                <div class="word">inseparable</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> impossible to separate</div>
+                    <div class="translation"><strong>DE:</strong> untrennbar</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">untrennbar</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> inseparable</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> impossible to separate</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">hostile</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> unfriendly, aggressive or opposed to somebody or something</div>
-                <div class="translation"><strong>DE:</strong> feindlich</div>
+            <div class="front-en">
+                <div class="word">hostile</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> unfriendly, aggressive or opposed to somebody or something</div>
+                    <div class="translation"><strong>DE:</strong> feindlich</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">feindlich</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> hostile</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> unfriendly, aggressive or opposed to somebody or something</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">uninhabited</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> having no permanent inhabitants</div>
-                <div class="translation"><strong>DE:</strong> unbewohnt</div>
+            <div class="front-en">
+                <div class="word">uninhabited</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> having no permanent inhabitants</div>
+                    <div class="translation"><strong>DE:</strong> unbewohnt</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">unbewohnt</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> uninhabited</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> having no permanent inhabitants</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">disputed</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> claimed or contested by different sides</div>
-                <div class="translation"><strong>DE:</strong> umstritten</div>
+            <div class="front-en">
+                <div class="word">disputed</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> claimed or contested by different sides</div>
+                    <div class="translation"><strong>DE:</strong> umstritten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">umstritten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> disputed</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> claimed or contested by different sides</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to prompt sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to cause or encourage something to happen</div>
-                <div class="translation"><strong>DE:</strong> etw. auslösen / veranlassen</div>
+            <div class="front-en">
+                <div class="word">to prompt sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to cause or encourage something to happen</div>
+                    <div class="translation"><strong>DE:</strong> etw. auslösen / veranlassen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">etw. auslösen / veranlassen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to prompt sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to cause or encourage something to happen</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">a flurry of development</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a sudden period of intense development activity</div>
-                <div class="translation"><strong>DE:</strong> eine Welle reger Entwicklung</div>
+            <div class="front-en">
+                <div class="word">a flurry of development</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a sudden period of intense development activity</div>
+                    <div class="translation"><strong>DE:</strong> eine Welle reger Entwicklung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">eine Welle reger Entwicklung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a flurry of development</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a sudden period of intense development activity</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">resource-rich</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> containing large amounts of valuable natural resources</div>
-                <div class="translation"><strong>DE:</strong> ressourcenreich</div>
+            <div class="front-en">
+                <div class="word">resource-rich</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> containing large amounts of valuable natural resources</div>
+                    <div class="translation"><strong>DE:</strong> ressourcenreich</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">ressourcenreich</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> resource-rich</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> containing large amounts of valuable natural resources</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">inalienable</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> impossible to take away, surrender or transfer</div>
-                <div class="translation"><strong>DE:</strong> unveräußerlich / untrennbar zugehörig</div>
+            <div class="front-en">
+                <div class="word">inalienable</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> impossible to take away, surrender or transfer</div>
+                    <div class="translation"><strong>DE:</strong> unveräußerlich / untrennbar zugehörig</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">unveräußerlich / untrennbar zugehörig</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> inalienable</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> impossible to take away, surrender or transfer</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to relegate sth. to the dustbin of history</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to regard something as outdated and no longer relevant</div>
-                <div class="translation"><strong>DE:</strong> etw. in den Mülleimer der Geschichte verbannen</div>
+            <div class="front-en">
+                <div class="word">to relegate sth. to the dustbin of history</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to regard something as outdated and no longer relevant</div>
+                    <div class="translation"><strong>DE:</strong> etw. in den Mülleimer der Geschichte verbannen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">etw. in den Mülleimer der Geschichte verbannen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to relegate sth. to the dustbin of history</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to regard something as outdated and no longer relevant</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">by no means</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> not at all; in no way</div>
-                <div class="translation"><strong>DE:</strong> keineswegs</div>
+            <div class="front-en">
+                <div class="word">by no means</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> not at all; in no way</div>
+                    <div class="translation"><strong>DE:</strong> keineswegs</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">keineswegs</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> by no means</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> not at all; in no way</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">proposition</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an idea or statement put forward for consideration</div>
-                <div class="translation"><strong>DE:</strong> Aussage / These</div>
+            <div class="front-en">
+                <div class="word">proposition</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an idea or statement put forward for consideration</div>
+                    <div class="translation"><strong>DE:</strong> Aussage / These</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Aussage / These</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> proposition</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an idea or statement put forward for consideration</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to rise to prominence</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to become important, powerful or well known</div>
-                <div class="translation"><strong>DE:</strong> an Bedeutung gewinnen</div>
+            <div class="front-en">
+                <div class="word">to rise to prominence</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to become important, powerful or well known</div>
+                    <div class="translation"><strong>DE:</strong> an Bedeutung gewinnen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">an Bedeutung gewinnen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to rise to prominence</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to become important, powerful or well known</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">inclination</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a tendency or preference towards something</div>
-                <div class="translation"><strong>DE:</strong> Neigung / Tendenz</div>
+            <div class="front-en">
+                <div class="word">inclination</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a tendency or preference towards something</div>
+                    <div class="translation"><strong>DE:</strong> Neigung / Tendenz</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Neigung / Tendenz</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> inclination</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a tendency or preference towards something</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to throw off the yoke</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to free oneself from oppressive control</div>
-                <div class="translation"><strong>DE:</strong> das Joch abschütteln</div>
+            <div class="front-en">
+                <div class="word">to throw off the yoke</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to free oneself from oppressive control</div>
+                    <div class="translation"><strong>DE:</strong> das Joch abschütteln</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">das Joch abschütteln</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to throw off the yoke</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to free oneself from oppressive control</div>
+                </div>
             </div>
         </div>
 
         <div class="card p2" onclick="toggleCard(this)">
-            <div class="word">to acquire territory</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to gain possession or control of land</div>
-                <div class="translation"><strong>DE:</strong> Gebiet erwerben</div>
+            <div class="front-en">
+                <div class="word">to acquire territory</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to gain possession or control of land</div>
+                    <div class="translation"><strong>DE:</strong> Gebiet erwerben</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Gebiet erwerben</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to acquire territory</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to gain possession or control of land</div>
+                </div>
             </div>
         </div>
 
 
         <!-- ================= SEITE 3 ================= -->
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">large swaths of territory</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> very large areas of land</div>
-                <div class="translation"><strong>DE:</strong> große Landstriche</div>
+            <div class="front-en">
+                <div class="word">large swaths of territory</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> very large areas of land</div>
+                    <div class="translation"><strong>DE:</strong> große Landstriche</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">große Landstriche</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> large swaths of territory</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> very large areas of land</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">newly minted</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> newly created or established</div>
-                <div class="translation"><strong>DE:</strong> neu entstanden / neu geschaffen</div>
+            <div class="front-en">
+                <div class="word">newly minted</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> newly created or established</div>
+                    <div class="translation"><strong>DE:</strong> neu entstanden / neu geschaffen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">neu entstanden / neu geschaffen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> newly minted</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> newly created or established</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to aspire to sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to strongly desire to achieve something</div>
-                <div class="translation"><strong>DE:</strong> etw. anstreben</div>
+            <div class="front-en">
+                <div class="word">to aspire to sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to strongly desire to achieve something</div>
+                    <div class="translation"><strong>DE:</strong> etw. anstreben</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">etw. anstreben</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to aspire to sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to strongly desire to achieve something</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">short-lived</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> lasting only for a short period</div>
-                <div class="translation"><strong>DE:</strong> kurzlebig</div>
+            <div class="front-en">
+                <div class="word">short-lived</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> lasting only for a short period</div>
+                    <div class="translation"><strong>DE:</strong> kurzlebig</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">kurzlebig</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> short-lived</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> lasting only for a short period</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">conscription</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> compulsory enrolment in military service</div>
-                <div class="translation"><strong>DE:</strong> Wehrpflicht</div>
+            <div class="front-en">
+                <div class="word">conscription</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> compulsory enrolment in military service</div>
+                    <div class="translation"><strong>DE:</strong> Wehrpflicht</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Wehrpflicht</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> conscription</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> compulsory enrolment in military service</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">legal equality</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the principle that all people have equal status under the law</div>
-                <div class="translation"><strong>DE:</strong> rechtliche Gleichheit</div>
+            <div class="front-en">
+                <div class="word">legal equality</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the principle that all people have equal status under the law</div>
+                    <div class="translation"><strong>DE:</strong> rechtliche Gleichheit</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">rechtliche Gleichheit</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> legal equality</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the principle that all people have equal status under the law</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">political participation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> involvement of citizens in political processes</div>
-                <div class="translation"><strong>DE:</strong> politische Teilhabe</div>
+            <div class="front-en">
+                <div class="word">political participation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> involvement of citizens in political processes</div>
+                    <div class="translation"><strong>DE:</strong> politische Teilhabe</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">politische Teilhabe</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> political participation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> involvement of citizens in political processes</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to retain influence</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to continue to have the ability to affect events or decisions</div>
-                <div class="translation"><strong>DE:</strong> Einfluss behalten</div>
+            <div class="front-en">
+                <div class="word">to retain influence</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to continue to have the ability to affect events or decisions</div>
+                    <div class="translation"><strong>DE:</strong> Einfluss behalten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Einfluss behalten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to retain influence</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to continue to have the ability to affect events or decisions</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">under extreme duress</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> under severe pressure, threat or coercion</div>
-                <div class="translation"><strong>DE:</strong> unter starkem Zwang / Druck</div>
+            <div class="front-en">
+                <div class="word">under extreme duress</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> under severe pressure, threat or coercion</div>
+                    <div class="translation"><strong>DE:</strong> unter starkem Zwang / Druck</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">unter starkem Zwang / Druck</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> under extreme duress</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> under severe pressure, threat or coercion</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to resurface</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to appear or become important again</div>
-                <div class="translation"><strong>DE:</strong> wieder auftauchen</div>
+            <div class="front-en">
+                <div class="word">to resurface</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to appear or become important again</div>
+                    <div class="translation"><strong>DE:</strong> wieder auftauchen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">wieder auftauchen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to resurface</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to appear or become important again</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">war of conquest</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a war fought in order to acquire territory</div>
-                <div class="translation"><strong>DE:</strong> Eroberungskrieg</div>
+            <div class="front-en">
+                <div class="word">war of conquest</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a war fought in order to acquire territory</div>
+                    <div class="translation"><strong>DE:</strong> Eroberungskrieg</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Eroberungskrieg</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> war of conquest</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a war fought in order to acquire territory</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">indivisibility</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the state of being unable to be divided</div>
-                <div class="translation"><strong>DE:</strong> Unteilbarkeit</div>
+            <div class="front-en">
+                <div class="word">indivisibility</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the state of being unable to be divided</div>
+                    <div class="translation"><strong>DE:</strong> Unteilbarkeit</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Unteilbarkeit</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> indivisibility</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the state of being unable to be divided</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">humiliation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the state of being made to feel ashamed or inferior</div>
-                <div class="translation"><strong>DE:</strong> Demütigung / Erniedrigung</div>
+            <div class="front-en">
+                <div class="word">humiliation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the state of being made to feel ashamed or inferior</div>
+                    <div class="translation"><strong>DE:</strong> Demütigung / Erniedrigung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Demütigung / Erniedrigung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> humiliation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the state of being made to feel ashamed or inferior</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">plaything of foreign powers</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a country controlled or manipulated by stronger foreign states</div>
-                <div class="translation"><strong>DE:</strong> Spielball fremder Mächte</div>
+            <div class="front-en">
+                <div class="word">plaything of foreign powers</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a country controlled or manipulated by stronger foreign states</div>
+                    <div class="translation"><strong>DE:</strong> Spielball fremder Mächte</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Spielball fremder Mächte</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> plaything of foreign powers</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a country controlled or manipulated by stronger foreign states</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to yearn for sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to strongly desire something, especially something from the past</div>
-                <div class="translation"><strong>DE:</strong> sich nach etw. sehnen</div>
+            <div class="front-en">
+                <div class="word">to yearn for sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to strongly desire something, especially something from the past</div>
+                    <div class="translation"><strong>DE:</strong> sich nach etw. sehnen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">sich nach etw. sehnen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to yearn for sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to strongly desire something, especially something from the past</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">dissolution</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the process by which an organisation or political entity ceases to exist</div>
-                <div class="translation"><strong>DE:</strong> Auflösung</div>
+            <div class="front-en">
+                <div class="word">dissolution</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the process by which an organisation or political entity ceases to exist</div>
+                    <div class="translation"><strong>DE:</strong> Auflösung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Auflösung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> dissolution</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the process by which an organisation or political entity ceases to exist</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to administer sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to manage or govern something</div>
-                <div class="translation"><strong>DE:</strong> etw. verwalten</div>
+            <div class="front-en">
+                <div class="word">to administer sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to manage or govern something</div>
+                    <div class="translation"><strong>DE:</strong> etw. verwalten</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">etw. verwalten</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to administer sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to manage or govern something</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">Manifest Destiny</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the 19th-century belief that US expansion across North America was destined or justified</div>
-                <div class="translation"><strong>DE:</strong> Manifest Destiny / Vorstellung vom vorbestimmten US-Expansionismus</div>
+            <div class="front-en">
+                <div class="word">Manifest Destiny</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the 19th-century belief that US expansion across North America was destined or justified</div>
+                    <div class="translation"><strong>DE:</strong> Manifest Destiny / Vorstellung vom vorbestimmten US-Expansionismus</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Manifest Destiny / Vorstellung vom vorbestimmten US-Expansionismus</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> Manifest Destiny</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the 19th-century belief that US expansion across North America was destined or justified</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">settler</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a person who moves to and permanently occupies a new territory</div>
-                <div class="translation"><strong>DE:</strong> Siedler / Siedlerin</div>
+            <div class="front-en">
+                <div class="word">settler</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a person who moves to and permanently occupies a new territory</div>
+                    <div class="translation"><strong>DE:</strong> Siedler / Siedlerin</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Siedler / Siedlerin</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> settler</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a person who moves to and permanently occupies a new territory</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">recognised borders</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> territorial boundaries accepted by other states and international arrangements</div>
-                <div class="translation"><strong>DE:</strong> anerkannte Grenzen</div>
+            <div class="front-en">
+                <div class="word">recognised borders</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> territorial boundaries accepted by other states and international arrangements</div>
+                    <div class="translation"><strong>DE:</strong> anerkannte Grenzen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">anerkannte Grenzen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> recognised borders</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> territorial boundaries accepted by other states and international arrangements</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">rights-based international order</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an international system based on recognised rights, rules and institutions</div>
-                <div class="translation"><strong>DE:</strong> rechtebasierte internationale Ordnung</div>
+            <div class="front-en">
+                <div class="word">rights-based international order</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an international system based on recognised rights, rules and institutions</div>
+                    <div class="translation"><strong>DE:</strong> rechtebasierte internationale Ordnung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">rechtebasierte internationale Ordnung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> rights-based international order</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an international system based on recognised rights, rules and institutions</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to violate recognised borders</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to disregard or breach accepted territorial boundaries</div>
-                <div class="translation"><strong>DE:</strong> anerkannte Grenzen verletzen</div>
+            <div class="front-en">
+                <div class="word">to violate recognised borders</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to disregard or breach accepted territorial boundaries</div>
+                    <div class="translation"><strong>DE:</strong> anerkannte Grenzen verletzen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">anerkannte Grenzen verletzen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to violate recognised borders</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to disregard or breach accepted territorial boundaries</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">edifice</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a complex structure or system; in the text: the international order</div>
-                <div class="translation"><strong>DE:</strong> Gefüge / Ordnung</div>
+            <div class="front-en">
+                <div class="word">edifice</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a complex structure or system; in the text: the international order</div>
+                    <div class="translation"><strong>DE:</strong> Gefüge / Ordnung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Gefüge / Ordnung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> edifice</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a complex structure or system; in the text: the international order</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">annexation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the act of taking territory and incorporating it into another state</div>
-                <div class="translation"><strong>DE:</strong> Annexion</div>
+            <div class="front-en">
+                <div class="word">annexation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the act of taking territory and incorporating it into another state</div>
+                    <div class="translation"><strong>DE:</strong> Annexion</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Annexion</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> annexation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the act of taking territory and incorporating it into another state</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">imposition</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the act of forcing something to be accepted</div>
-                <div class="translation"><strong>DE:</strong> Auferlegung</div>
+            <div class="front-en">
+                <div class="word">imposition</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the act of forcing something to be accepted</div>
+                    <div class="translation"><strong>DE:</strong> Auferlegung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Auferlegung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> imposition</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the act of forcing something to be accepted</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">economic exploitation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> using another country's people or resources primarily for one's own economic benefit</div>
-                <div class="translation"><strong>DE:</strong> wirtschaftliche Ausbeutung</div>
+            <div class="front-en">
+                <div class="word">economic exploitation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> using another country's people or resources primarily for one's own economic benefit</div>
+                    <div class="translation"><strong>DE:</strong> wirtschaftliche Ausbeutung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">wirtschaftliche Ausbeutung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> economic exploitation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> using another country's people or resources primarily for one's own economic benefit</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">superiority</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the state or belief of being better or more powerful than others</div>
-                <div class="translation"><strong>DE:</strong> Überlegenheit</div>
+            <div class="front-en">
+                <div class="word">superiority</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the state or belief of being better or more powerful than others</div>
+                    <div class="translation"><strong>DE:</strong> Überlegenheit</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Überlegenheit</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> superiority</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the state or belief of being better or more powerful than others</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">civilisation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an organised society and its culture and institutions</div>
-                <div class="translation"><strong>DE:</strong> Zivilisation</div>
+            <div class="front-en">
+                <div class="word">civilisation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an organised society and its culture and institutions</div>
+                    <div class="translation"><strong>DE:</strong> Zivilisation</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Zivilisation</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> civilisation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an organised society and its culture and institutions</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">governance</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the way in which a country or organisation is governed</div>
-                <div class="translation"><strong>DE:</strong> Regierungsführung</div>
+            <div class="front-en">
+                <div class="word">governance</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the way in which a country or organisation is governed</div>
+                    <div class="translation"><strong>DE:</strong> Regierungsführung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Regierungsführung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> governance</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the way in which a country or organisation is governed</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">underlying motives</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> less obvious reasons behind an action</div>
-                <div class="translation"><strong>DE:</strong> zugrunde liegende Motive</div>
+            <div class="front-en">
+                <div class="word">underlying motives</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> less obvious reasons behind an action</div>
+                    <div class="translation"><strong>DE:</strong> zugrunde liegende Motive</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">zugrunde liegende Motive</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> underlying motives</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> less obvious reasons behind an action</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">ruling elite</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a small powerful group that dominates political or economic decision-making</div>
-                <div class="translation"><strong>DE:</strong> herrschende Elite</div>
+            <div class="front-en">
+                <div class="word">ruling elite</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a small powerful group that dominates political or economic decision-making</div>
+                    <div class="translation"><strong>DE:</strong> herrschende Elite</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">herrschende Elite</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> ruling elite</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a small powerful group that dominates political or economic decision-making</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">to be distinct from sth.</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> to be clearly different from something</div>
-                <div class="translation"><strong>DE:</strong> sich deutlich von etw. unterscheiden</div>
+            <div class="front-en">
+                <div class="word">to be distinct from sth.</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to be clearly different from something</div>
+                    <div class="translation"><strong>DE:</strong> sich deutlich von etw. unterscheiden</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">sich deutlich von etw. unterscheiden</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> to be distinct from sth.</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> to be clearly different from something</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">objective</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> something a person, government or organisation aims to achieve</div>
-                <div class="translation"><strong>DE:</strong> Ziel / Zielsetzung</div>
+            <div class="front-en">
+                <div class="word">objective</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> something a person, government or organisation aims to achieve</div>
+                    <div class="translation"><strong>DE:</strong> Ziel / Zielsetzung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Ziel / Zielsetzung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> objective</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> something a person, government or organisation aims to achieve</div>
+                </div>
             </div>
         </div>
 
         <div class="card p3" onclick="toggleCard(this)">
-            <div class="word">implementation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the process of putting a policy or plan into effect</div>
-                <div class="translation"><strong>DE:</strong> Umsetzung</div>
+            <div class="front-en">
+                <div class="word">implementation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the process of putting a policy or plan into effect</div>
+                    <div class="translation"><strong>DE:</strong> Umsetzung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Umsetzung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> implementation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the process of putting a policy or plan into effect</div>
+                </div>
             </div>
         </div>
 
 
         <!-- ================= SEITE 4 ================= -->
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">alliance</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an agreement between states or groups to cooperate</div>
-                <div class="translation"><strong>DE:</strong> Bündnis</div>
+            <div class="front-en">
+                <div class="word">alliance</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an agreement between states or groups to cooperate</div>
+                    <div class="translation"><strong>DE:</strong> Bündnis</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Bündnis</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> alliance</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an agreement between states or groups to cooperate</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">indirect control</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> influence over a country without formally governing it</div>
-                <div class="translation"><strong>DE:</strong> indirekte Kontrolle</div>
+            <div class="front-en">
+                <div class="word">indirect control</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> influence over a country without formally governing it</div>
+                    <div class="translation"><strong>DE:</strong> indirekte Kontrolle</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">indirekte Kontrolle</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> indirect control</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> influence over a country without formally governing it</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">strategic advantage</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a position or condition that improves one's ability to achieve long-term goals</div>
-                <div class="translation"><strong>DE:</strong> strategischer Vorteil</div>
+            <div class="front-en">
+                <div class="word">strategic advantage</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a position or condition that improves one's ability to achieve long-term goals</div>
+                    <div class="translation"><strong>DE:</strong> strategischer Vorteil</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">strategischer Vorteil</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> strategic advantage</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a position or condition that improves one's ability to achieve long-term goals</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">direct rule</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> government of a territory directly by a foreign power</div>
-                <div class="translation"><strong>DE:</strong> direkte Herrschaft</div>
+            <div class="front-en">
+                <div class="word">direct rule</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> government of a territory directly by a foreign power</div>
+                    <div class="translation"><strong>DE:</strong> direkte Herrschaft</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">direkte Herrschaft</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> direct rule</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> government of a territory directly by a foreign power</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">administrative structures</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> institutions and systems used to govern a territory</div>
-                <div class="translation"><strong>DE:</strong> Verwaltungsstrukturen</div>
+            <div class="front-en">
+                <div class="word">administrative structures</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> institutions and systems used to govern a territory</div>
+                    <div class="translation"><strong>DE:</strong> Verwaltungsstrukturen</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Verwaltungsstrukturen</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> administrative structures</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> institutions and systems used to govern a territory</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">economic dominance</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a situation in which one actor has considerably greater economic power than others</div>
-                <div class="translation"><strong>DE:</strong> wirtschaftliche Vorherrschaft</div>
+            <div class="front-en">
+                <div class="word">economic dominance</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a situation in which one actor has considerably greater economic power than others</div>
+                    <div class="translation"><strong>DE:</strong> wirtschaftliche Vorherrschaft</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">wirtschaftliche Vorherrschaft</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> economic dominance</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a situation in which one actor has considerably greater economic power than others</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">globalisation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> the growing interconnectedness of countries, economies and societies</div>
-                <div class="translation"><strong>DE:</strong> Globalisierung</div>
+            <div class="front-en">
+                <div class="word">globalisation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> the growing interconnectedness of countries, economies and societies</div>
+                    <div class="translation"><strong>DE:</strong> Globalisierung</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Globalisierung</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> globalisation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> the growing interconnectedness of countries, economies and societies</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">developing country</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a country with comparatively lower levels of income or industrial development</div>
-                <div class="translation"><strong>DE:</strong> Entwicklungsland</div>
+            <div class="front-en">
+                <div class="word">developing country</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a country with comparatively lower levels of income or industrial development</div>
+                    <div class="translation"><strong>DE:</strong> Entwicklungsland</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">Entwicklungsland</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> developing country</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a country with comparatively lower levels of income or industrial development</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">transnational corporation</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> a company that operates and exercises influence across national borders</div>
-                <div class="translation"><strong>DE:</strong> transnationaler Konzern</div>
+            <div class="front-en">
+                <div class="word">transnational corporation</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> a company that operates and exercises influence across national borders</div>
+                    <div class="translation"><strong>DE:</strong> transnationaler Konzern</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">transnationaler Konzern</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> transnational corporation</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> a company that operates and exercises influence across national borders</div>
+                </div>
             </div>
         </div>
 
         <div class="card p4" onclick="toggleCard(this)">
-            <div class="word">international institution</div>
-            <div class="hint">▶ Klicke für Definition</div>
-            <div class="details">
-                <div class="definition"><strong>EN:</strong> an organisation through which countries cooperate internationally</div>
-                <div class="translation"><strong>DE:</strong> internationale Institution</div>
+            <div class="front-en">
+                <div class="word">international institution</div>
+                <div class="hint">▶ Klicke für Definition & Übersetzung</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> an organisation through which countries cooperate internationally</div>
+                    <div class="translation"><strong>DE:</strong> internationale Institution</div>
+                </div>
+            </div>
+            <div class="front-de">
+                <div class="word" style="color: #059669;">internationale Institution</div>
+                <div class="hint">▶ Klicke für englisches Wort & Definition</div>
+                <div class="details">
+                    <div class="definition"><strong>EN:</strong> international institution</div>
+                    <div class="translation" style="color: #334155; font-weight: normal;"><strong>Definition:</strong> an organisation through which countries cooperate internationally</div>
+                </div>
             </div>
         </div>
 
@@ -1085,6 +2151,7 @@
 
     <script>
         let selectedPage = 'all';
+        let isGermanFront = false;
 
         function toggleCard(cardElement) {
             cardElement.classList.toggle('open');
@@ -1111,7 +2178,6 @@
                 if (matchesPage && matchesSearch) {
                     card.style.display = 'block';
                     
-                    // Wenn aktiv gesucht wird, automatisch aufdecken
                     if (query !== '') {
                         card.classList.add('open');
                     } else {
@@ -1121,6 +2187,37 @@
                     card.style.display = 'none';
                 }
             });
+        }
+
+        function shuffleCards() {
+            let grid = document.getElementById('cardGrid');
+            let cards = Array.from(grid.children);
+
+            // Fisher-Yates Shuffle Algorithmus
+            for (let i = cards.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                grid.appendChild(cards[j]);
+            }
+            
+            // Alle Karten nach dem Mischen wieder einklappen
+            cards.forEach(card => card.classList.remove('open'));
+        }
+
+        function toggleMode() {
+            isGermanFront = !isGermanFront;
+            let modeBtn = document.getElementById('modeBtn');
+
+            if (isGermanFront) {
+                document.body.classList.add('de-front');
+                modeBtn.innerText = '🔄 Vorderseite: Deutsch';
+            } else {
+                document.body.classList.remove('de-front');
+                modeBtn.innerText = '🔄 Vorderseite: Englisch';
+            }
+
+            // Beim Wechsel alle Karten wieder zudecken
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => card.classList.remove('open'));
         }
     </script>
 </body>
